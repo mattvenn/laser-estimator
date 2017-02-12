@@ -2,8 +2,7 @@ import os
 import unittest
 from flask.ext.testing import TestCase
 import config
-from tracker import app, db
-from tracker.models import User
+from laser_estimator import app
 from base64 import b64encode
 
 
@@ -15,12 +14,18 @@ class TestCase(TestCase):
         app.config['WTF_CSRF_ENABLED'] = False
         self.app = app.test_client()
 
-    def test_add_data(self):
-        # first data
-        payload = { 'file': open('testfiles/50x50empty.svg') }
-        rv = self.client.post("/", data=payload)
-        print rv.status_code
-
+    def test_svgs(self):
+        config = [
+            { 'file': '50x50_empty.svg', 'len': '200.0 mm' },
+            { 'file': '50x50circle.svg', 'len': '156.98 mm' },
+            { 'file': 'text_as_path.svg', 'len': '513.31 mm' },
+            ]
+        
+        for c in config:
+            payload = { 'svg': open('testfiles/%s' % c['file']) }
+            rv = self.client.post("/", data=payload)
+            print rv.data
+            assert c['len'] in rv.data
 
 if __name__ == '__main__':
     unittest.main()
