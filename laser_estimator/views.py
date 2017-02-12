@@ -4,7 +4,6 @@ from flask import render_template, request, Response, flash, redirect, session, 
 from werkzeug.utils import secure_filename
 import logging
 import os
-from applytransform import ApplyTransform
 
 log = logging.getLogger()
 log.setLevel(logging.INFO)
