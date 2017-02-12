@@ -1,0 +1,17 @@
+<html>
+  <head>
+    {% if title %}
+    <title>{{ title }} - Nice Cuts</title>
+    {% else %}
+    <title>Nice Cuts</title>
+    {% endif %}
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <hr>
+    {% for message in get_flashed_messages() %}
+        <div class=flash>{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+  </body>
+</html>

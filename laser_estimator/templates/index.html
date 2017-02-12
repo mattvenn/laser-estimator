@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Upload SVG</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      <h3>SVG file preparation instructions</h3>
+      <ul>
+      <li>Edit - Select All</li>
+      <li>Path - Object to Path</li>
+      </ul>
+      {{ form.svg }} <input type="submit" value="Upload">
+  </form>
+{% endblock %}

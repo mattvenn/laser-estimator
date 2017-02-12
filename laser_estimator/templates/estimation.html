@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Estimation</h1>
+      <p>
+          paths found : {{ total_paths }}<br>
+          path length : {{ total_length }} px ({{ total_length_mm }} mm)<br>
+          time : {{ time }} min<br>
+          file name: {{ filename }}<br>
+         <a href="{{ url_for('index') }}">Upload a new file</a>
+          <hr>
+          <img src="{{ filename }}"><br>
+          <hr>
+      </p>
+{% endblock %}
