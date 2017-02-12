@@ -19,6 +19,7 @@ apt-get install libxslt1-dev
 
 # Todo
 
+* thickness, speed tables
 * rastering?
 * how to deal with units, size of svg
-* thickness, speed tables
+* alert user if files are uploaded with unmeasurable shapes like [text](testfiles/text.svg)
