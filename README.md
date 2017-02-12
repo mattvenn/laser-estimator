@@ -1,10 +1,23 @@
-# install
+# Laser time estimator
+
+Attempts to estimate time it will take to lasercut an SVG file
+
+# Install
+
+pip install -r requirements.txt
 
 as well as requirements, needs some packages installed on the system
 
-inkscape with extensions in /usr/share/inscape/extensions
+apt-get install inkscape
+apt-get install libxml2-dev
+apt-get install libxslt1-dev
 
-# todo
+# Attribution
+
+* applytransformations from https://github.com/Klowner/inkscape-applytransforms.git
+* svgpathtools
+
+# Todo
 
 * rastering?
 * how to deal with units, size of svg
