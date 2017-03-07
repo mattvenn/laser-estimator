@@ -24,7 +24,6 @@ class TestCase(TestCase):
         for c in config:
             payload = { 'svg': open('testfiles/%s' % c['file']) }
             rv = self.client.post("/", data=payload)
-            print rv.data
             assert c['len'] in rv.data
 
 if __name__ == '__main__':
