@@ -25,6 +25,18 @@ class TestCase(TestCase):
             rv = self.client.post("/", data=payload)
             assert c['bb'] in rv.data
 
+    def test_colour_paths(self):
+        config = [
+            { 'file': '50x50_empty.svg', 'bb': 'colour #000000 = 200.0 mm' },
+            { 'file': '50x50_empty_RGB.svg', 'bb': ' #0000ff = 200.0 mm' },
+            { 'file': '50x50_empty_RGB.svg', 'bb': ' #000000 = 200.0 mm' },
+            { 'file': '50x50_empty_RGB.svg', 'bb': ' #ff0000 = 200.0 mm' },
+            ]
+        for c in config:
+            payload = { 'svg': open('testfiles/%s' % c['file']) }
+            rv = self.client.post("/", data=payload)
+            assert c['bb'] in rv.data
+
     def test_svgs(self):
         config = [
             { 'file': '50x50_empty.svg', 'len': '200.0 mm' },
