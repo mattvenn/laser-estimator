@@ -23,6 +23,7 @@
       <p>
           paths found : {{ total_paths }}<br>
           total path length : {{ total_length }} px ({{ total_length_mm }} mm)<br>
+          bounding box : {{ width }} x {{ height }} mm<br>
             
           {% for key, value in lengths_by_colour.iteritems() %}
                <svg width="50" height="50">

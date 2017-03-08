@@ -65,6 +65,7 @@ def index():
         total_length = 0
         lengths_by_colour = {}
         total_paths = 0
+        t_xmin, t_xmax, t_ymin, t_ymax = 1000000, 0, 1000000, 0
         for i in range(len(paths)):
             colour = None
             path = paths[i]
@@ -85,13 +86,31 @@ def index():
             total_length += path.length()
             total_paths += 1
 
+            # bounding box
+            xmin, xmax, ymin, ymax = path.bbox()
+            if xmin < t_xmin:
+                t_xmin = xmin
+            if xmax > t_xmax:
+                t_xmax = xmax
+            if ymin < t_ymin:
+                t_ymin = ymin
+            if ymax > t_ymax:
+                t_ymax = ymax
+
+            #log.info("width = %d height = %d" % ((xmax - xmin) * px_to_mm, (ymax - ymin) * px_to_mm))
+
         total_length_mm = total_length * px_to_mm
         log.info("total length = %d" % (total_length_mm))
+        width = (t_xmax - t_xmin) * px_to_mm
+        height = (t_ymax - t_ymin) * px_to_mm
+        log.info("width = %d mm height = %d mm" % (width, height))
 
         return render_template('estimation.html', 
             filename=filename,
-            total_length=round(total_length,2),
-            total_length_mm=round(total_length_mm,2),
+            total_length=round(total_length, 2),
+            total_length_mm=round(total_length_mm, 2),
+            width=round(width, 2),
+            height=round(height, 2),
             total_paths=total_paths,
             lengths_by_colour = lengths_by_colour)
 

@@ -14,6 +14,17 @@ class TestCase(TestCase):
         app.config['WTF_CSRF_ENABLED'] = False
         self.app = app.test_client()
 
+    def test_bounding_box(self):
+        config = [
+            { 'file': '50x50_empty.svg', 'bb': '50.0 x 50.0 mm' },
+            { 'file': '50x50_empty_RGB.svg', 'bb': '161.22 x 51.28 mm' },
+            { 'file': 'bounding.svg', 'bb': '185.16 x 139.12 mm' },
+            ]
+        for c in config:
+            payload = { 'svg': open('testfiles/%s' % c['file']) }
+            rv = self.client.post("/", data=payload)
+            assert c['bb'] in rv.data
+
     def test_svgs(self):
         config = [
             { 'file': '50x50_empty.svg', 'len': '200.0 mm' },
