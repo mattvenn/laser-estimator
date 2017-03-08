@@ -1,12 +1,41 @@
 {% extends "base.html" %}
 {% block content %}
+    <script type="text/javascript">
+    // javascript to do the speed/length calculations
+        function calculate() 
+        {
+            var speeds = [];
+            var lengths = [];
+            {% for key, value in lengths_by_colour.iteritems() %}
+                speeds.push(parseInt(document.getElementById('{{ key }}').value)); 
+                lengths.push(parseInt({{value}})); 
+            {% endfor %}
+            var result = document.getElementById('result');  
+            var total_time = 0;
+            for( var i = 0; i < speeds.length; i ++)
+                total_time += lengths[i] / speeds[i]; 
+            result.value = Math.round(100 * total_time / 60) / 100;
+        }
+        window.onload = calculate;
+    </script>
+
     <h1>Estimation</h1>
       <p>
           paths found : {{ total_paths }}<br>
-          path length : {{ total_length }} px ({{ total_length_mm }} mm)<br>
-          time : {{ time }} min<br>
+          total path length : {{ total_length }} px ({{ total_length_mm }} mm)<br>
+            
+          {% for key, value in lengths_by_colour.iteritems() %}
+               <svg width="50" height="50">
+                 <rect width="50" height="50" style="fill:{{ key }}" />
+               </svg> 
+               colour {{ key }} = {{ value }} mm
+                <input id="{{ key }}" type="text" oninput="calculate()" value="10"/>mm/s
+                <br>
+          {% endfor %}
+
+          time : <input id="result"/> min<br>
           file name: {{ filename }}<br>
-         <a href="{{ url_for('index') }}">Upload a new file</a>
+          <a href="{{ url_for('index') }}">Upload a new file</a>
           <hr>
           <img src="{{ filename }}"><br>
           <hr>

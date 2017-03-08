@@ -4,6 +4,7 @@ from flask import render_template, request, Response, flash, redirect, session, 
 from werkzeug.utils import secure_filename
 import logging
 import os
+#from pprint import pprint
 
 log = logging.getLogger()
 log.setLevel(logging.INFO)
@@ -14,7 +15,6 @@ log.addHandler(ch)
 
 # inkscape conversion between px & mm
 px_to_mm = 1 / 3.5433
-laser_cut_spd = 5 * 60 # mm per minute
 
 from flask_wtf import Form
 from flask_wtf.file import FileField, FileRequired
@@ -63,13 +63,25 @@ def index():
         log.info("found %d paths in file" % len(paths))
 
         total_length = 0
+        lengths_by_colour = {}
         total_paths = 0
         for i in range(len(paths)):
+            colour = None
             path = paths[i]
             attr = attributes[i]
-        #    pprint(path)
-        #    pprint(attr)
-            log.info("path %d id %s length %d" % (total_paths, attr['id'], path.length()))
+            style = attr['style']
+            styles = style.split(';')
+            for s in styles:
+                if s.startswith('stroke:'):
+                    colour = s[7:] # just grab the colour
+            #pprint(path)
+            #pprint(styles)
+            log.info("path %d id %s length %d colour %s" % (total_paths, attr['id'], path.length(), colour))
+            try:
+                lengths_by_colour[colour] += round(path.length() * px_to_mm, 2)
+            except KeyError:
+                lengths_by_colour[colour] = round(path.length() * px_to_mm, 2)
+            
             total_length += path.length()
             total_paths += 1
 
@@ -81,6 +93,6 @@ def index():
             total_length=round(total_length,2),
             total_length_mm=round(total_length_mm,2),
             total_paths=total_paths,
-            time=round(total_length_mm/laser_cut_spd,2))
+            lengths_by_colour = lengths_by_colour)
 
     return render_template('index.html', form=form)

@@ -19,6 +19,7 @@ class TestCase(TestCase):
             { 'file': '50x50_empty.svg', 'len': '200.0 mm' },
             { 'file': '50x50circle.svg', 'len': '156.98 mm' },
             { 'file': 'text_as_path.svg', 'len': '513.31 mm' },
+            { 'file': '50x50_empty_RGB.svg', 'len': '600.0 mm' },
             ]
         
         for c in config:
