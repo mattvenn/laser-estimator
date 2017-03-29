@@ -7,6 +7,7 @@ from werkzeug.utils import secure_filename
 import logging
 import os
 import time
+from flask_mail import Mail, Message
 #from pprint import pprint
 
 log = logging.getLogger()
@@ -19,10 +20,13 @@ log.addHandler(ch)
 # inkscape conversion between px & mm
 px_to_mm = 1 / 3.5433
 
+# mail
+mail = Mail(app)
+
 from flask_wtf import Form
 from flask_wtf.file import FileField, FileRequired
-from wtforms import StringField, PasswordField, SelectField, PasswordField, TextField
-from wtforms.validators import DataRequired
+from wtforms import StringField, PasswordField, SelectField, PasswordField, TextField, HiddenField
+from wtforms.validators import DataRequired, Email
 
 """    
 
@@ -69,6 +73,14 @@ class UploadSVG(Form):
     svg = FileField('svg', validators=[DataRequired()])
     material_id = SelectField(u'Material', coerce=int)
 
+class SendEmail(Form):
+    name = StringField("Name",  [DataRequired("Please enter your name.")])
+    email = StringField("Email",  [DataRequired("Please enter your email address."), Email("This field requires a valid email address")])
+    material = HiddenField("material")
+    cut_choices = HiddenField("cut_choices")
+    svg = HiddenField("svg")
+    email_total_cost = HiddenField("email_total_cost")
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -88,6 +100,20 @@ def static_file(path):
 #    import ipdb; ipdb.set_trace()
     #directory = '/home/matthew/work/python/laser-estimator/laser-estimator/uploads/' #50x50circle.scoured.svg
     return send_from_directory(directory, path)
+
+@app.route("/send_email", methods=['POST'])
+def send_email():
+    form = SendEmail()
+    if form.validate_on_submit():
+        log.info("sending email to %s" % form.email.data)
+        msg = Message("quote request", sender="samples@nice-cuts.com", recipients=[form.email.data])
+        root_dir = os.path.dirname(os.getcwd())
+        image_path = os.path.join(root_dir, 'laser_estimator', form.svg.data)
+        msg.body = "Name: %s\nEmail: %s\nMaterial: %s\nTotal Cost: %s\nCut choices: %s\n" % (form.name.data, form.email.data, form.material.data, form.email_total_cost.data, form.cut_choices.data)
+        with app.open_resource(image_path) as fp:
+            msg.attach(form.svg.data, "image/svg", fp.read())
+        mail.send(msg)
+    return render_template('send_email.html', form=form)
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
@@ -152,8 +178,12 @@ def index():
         width = (t_xmax - t_xmin) * px_to_mm
         height = (t_ymax - t_ymin) * px_to_mm
         log.info("width = %d mm height = %d mm" % (width, height))
+        send_email_form = SendEmail()
+        send_email_form.material.data = material
+        send_email_form.svg.data = filename
 
         return render_template('estimation.html', 
+            form=send_email_form,
             filename=filename,
             total_length=round(total_length, 2),
             total_length_mm=round(total_length_mm, 2),

@@ -4,12 +4,17 @@
 
     <form method="POST" enctype="multipart/form-data">
       {{ form.hidden_tag() }}
+
+<!--
       <h3>Inkscape SVG file preparation instructions</h3>
       <ul>
       <li>Edit - Select All</li>
       <li>Path - Object to Path</li>
       </ul>
-      {{ form.material_id }} 
-      {{ form.svg }} <input type="submit" value="Upload">
+      -->
+
+      <h3>Choose your material</h3> {{ form.material_id }}<br>
+      <h3>Upload your SVG</h3> {{ form.svg }}<br>
+      <input type="submit" value="Upload">
   </form>
 {% endblock %}
