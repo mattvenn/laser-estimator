@@ -13,9 +13,8 @@
   </head>
   <body>
 
+
      <div class="container">
-
-
     {% for message in get_flashed_messages() %}
         <div class="alert alert-danger">
           <strong>{{ message }}</strong>
@@ -24,8 +23,19 @@
 
     {% block content %}{% endblock %}
 
-     <hr>
-       <a href="{{ url_for('login') }}">Login</a>
     </div>
+<br>
+
+ <footer id="colophon" class="site-footer" role="contentinfo">
+        
+        <div class="site-info">
+
+       <a href="{{ url_for('login') }}">Login</a> | <a href="http://nice-cuts.com">Back to nice-cuts.com</a>
+
+        </div>
+
+        <!-- .site-info -->
+
+    </footer><!-- #colophon -->
   </body>
 </html>
