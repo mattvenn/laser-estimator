@@ -1,4 +1,5 @@
 flask
+Flask-Mail
 flask_sqlalchemy
 sqlalchemy-migrate
 flask_admin

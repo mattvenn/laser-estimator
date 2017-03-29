@@ -6,37 +6,48 @@
         {
             var speeds = [];
             var lengths = [];
+            var cut_choice = "";
             {% for key, value in lengths_by_colour.iteritems() %}
                 var e = document.getElementById("{{ key }}");
                 var speed = e.options[e.selectedIndex].value;
+                var cut_type = e.options[e.selectedIndex].text;
                 speeds.push(parseInt(speed)); 
                 lengths.push(parseInt({{value}})); 
+                cut_choice += "{{ key }}";
+                cut_choice += " = ";
+                cut_choice += cut_type;
+                cut_choice += ",";
             {% endfor %}
             var result = document.getElementById('result');  
+            var cut_choices = document.getElementById('cut_choices');  
+            cut_choices.value = cut_choice;
             var cost = document.getElementById('cost');  
             var total_cost = document.getElementById('total_cost');  
+            var email_total_cost = document.getElementById('email_total_cost');  
             var total_time = 0;
 
             for( var i = 0; i < speeds.length; i ++)
                 total_time += lengths[i] / speeds[i]; 
 
-            result.value = Math.round(100 * total_time / 60) / 100;
+            result.textContent = Math.round(100 * total_time / 60) / 100;
             var cut_cost =  Math.round(100 * total_time * {{ cut_cost }}) / 100;
-            cost.value = cut_cost;
-            total_cost.value = cut_cost + {{material_cost}};
+            cost.textContent = cut_cost;
+            total_cost.textContent = cut_cost + {{material_cost}};
+            email_total_cost.value = cut_cost + {{material_cost}};
 
         }
         window.onload = calculate;
     </script>
 
-    <h1>Estimation</h1>
-      <p>
-          material : {{ material }} (vector etch speed = {{ material.vector_etch_speed }} mm/s, cut speed = {{ material.cut_speed }})<br>
-          paths found : {{ total_paths }}<br>
-          total path length : {{ total_length }} px ({{ total_length_mm }} mm)<br>
-          bounding box : {{ width }} x {{ height }} mm<br>
+    <h1>Your file</h1>
+            <ul>
+            <li>material : {{ material }} (vector etch speed = {{ material.vector_etch_speed }} mm/s, cut speed = {{ material.cut_speed }})</li>
+          <li>paths found : {{ total_paths }}</li>
+          <li>total path length : {{ total_length_mm }} mm</li>
+          <li>bounding box : {{ width }} x {{ height }} mm</li>
+          </ul>
             
-          <hr>
+    <h1>Choose type of cut per colour in file</h1>
           {% for key, value in lengths_by_colour.iteritems() %}
                <svg width="20" height="20">
                  <rect width="20" height="20" style="fill:{{ key }}" />
@@ -46,16 +57,31 @@
                 <br>
           {% endfor %}
 
-          <hr>
+          <h1>Estimation</h1>
+          <ul>
+          <li> time : <span id="result"/></span> min</li>
+          <li> cut cost : £<span id="cost"/></span></li>
+          <li> material cost : {{ material_cost }}</li>
+          <li> total cost : £<span id="total_cost"/></span></li>
+          </ul>
+          </p>
 
-          time : <input id="result"/> min<br>
-          cut cost : <input id="cost"/> £<br>
-          material cost : {{ material_cost }}<br>
-          total cost : <input id="total_cost"/> £<br>
+    <h1>Like this quote?</h1>
+        Fill in your email and we'll check the quote and get back to you with an approved price.
+        <form method="POST" action="{{ url_for('send_email') }}" enctype="multipart/form-data">
+          {{ form.hidden_tag() }}
+          Email: {{ form.email() }} Name: {{ form.name() }}<br>
+          {{ form.material }}
+          {{ form.svg }}
+          {{ form.cut_choices }}
+          {{ form.email_total_cost }}
+        <input type="submit" value="Send email">
+        </form>
 
+    <h1>Start again</h1>
           <a href="{{ url_for('index') }}">Upload a new file</a>
-          <hr>
-          <img src="{{ filename }}"><br>
-          <hr>
-      </p>
+
+      <h1>Your SVG</h1>
+      <img style="border:2px solid black" src="{{ filename }}"><br>
+
 {% endblock %}
