@@ -1,5 +1,11 @@
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
-from password import SECRET_KEY
+
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
+
+from password import SECRET_KEY, USERNAME, PASSWORD
+COST_PER_SEC = 40.0 / 60 / 60
+UNIT_SIZE_MM = 50 * 50 # mm
 UPLOAD_DIR = 'uploads'
 WTF_CSRF_ENABLED = True
