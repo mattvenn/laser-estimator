@@ -105,7 +105,7 @@ def static_file(path):
 def send_email():
     form = SendEmail()
     if form.validate_on_submit():
-        log.info("sending email to %s" % form.email.data)
+        log.info("sending email to %s" % app.config['EMAIL'])
         msg = Message("quote request", sender="samples@nice-cuts.com", recipients=[form.email.data])
         root_dir = os.path.dirname(os.getcwd())
         image_path = os.path.join(root_dir, 'laser_estimator', form.svg.data)
