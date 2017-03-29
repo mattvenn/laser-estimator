@@ -1,10 +1,12 @@
 from laser_estimator import app
 from models import Material
 from svgpathtools import svg2paths2
+from flask_admin.contrib.sqla import ModelView
 from flask import render_template, request, Response, flash, redirect, session, abort, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 import logging
 import os
+import time
 #from pprint import pprint
 
 log = logging.getLogger()
@@ -19,7 +21,7 @@ px_to_mm = 1 / 3.5433
 
 from flask_wtf import Form
 from flask_wtf.file import FileField, FileRequired
-from wtforms import StringField, PasswordField, SelectField
+from wtforms import StringField, PasswordField, SelectField, PasswordField, TextField
 from wtforms.validators import DataRequired
 
 """    
@@ -31,10 +33,50 @@ from wtforms.validators import DataRequired
         abort(500)
 """
 
+class SecureView(ModelView):
+    def is_accessible(self):
+        if 'logged_in' in session.keys():
+            return True
+
+    def inaccessible_callback(self, name, **kwargs):
+        # redirect to login page if user doesn't have access
+        return redirect(url_for('login', next=request.url))
+
+class LoginForm(Form):
+    username = TextField('Username', [DataRequired()])
+    password = PasswordField('Password', [DataRequired()])
+
+    def validate(self):
+        rv = Form.validate(self)
+        if not rv:
+            return False
+
+        if self.username.data != app.config['USERNAME']:
+            self.username.errors.append('Unknown username')
+            time.sleep(1)
+            return False
+
+        if self.password.data != app.config['PASSWORD']:
+            self.password.errors.append('bad password')
+            time.sleep(1)
+            return False
+
+        return True
+
+
 
 class UploadSVG(Form):
     svg = FileField('svg', validators=[DataRequired()])
     material_id = SelectField(u'Material', coerce=int)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        session['logged_in'] = True
+        flash('You were logged in')
+        return redirect('/admin')
+    return render_template('login.html', form=form)
 
 
 @app.route('/uploads/<path:path>')

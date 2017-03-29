@@ -11,3 +11,10 @@ class Material(db.Model):
     def __repr__(self):
         return '%s - %d mm' % (self.name, self.thickness)
 
+    def __init__(self, name=None, thickness=None, vector_etch_speed=None, cut_speed=None, cost_per_unit=None):
+        self.name = name
+        self.thickness = thickness
+        self.vector_etch_speed = vector_etch_speed
+        self.cut_speed = cut_speed
+        self.cost_per_unit = cost_per_unit
+

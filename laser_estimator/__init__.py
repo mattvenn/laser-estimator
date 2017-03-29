@@ -9,5 +9,5 @@ db = SQLAlchemy(app)
 
 from laser_estimator import views, models
 admin = Admin(app, name='laser estimator', template_mode='bootstrap3')
-admin.add_view(ModelView(models.Material, db.session))
+admin.add_view(views.SecureView(models.Material, db.session))
 
