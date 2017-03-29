@@ -6,5 +6,6 @@ SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 
 from password import SECRET_KEY, USERNAME, PASSWORD
 COST_PER_SEC = 40.0 / 60 / 60
+UNIT_SIZE_MM = 50 * 50 # mm
 UPLOAD_DIR = 'uploads'
 WTF_CSRF_ENABLED = True

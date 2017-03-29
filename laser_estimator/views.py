@@ -162,7 +162,7 @@ def index():
             total_paths=total_paths,
             material=material,
             cut_cost=app.config['COST_PER_SEC'],
-            material_cost=round(material.cost_per_unit * width * height / 10000,2),
+            material_cost=round(material.cost_per_unit * width * height / app.config['UNIT_SIZE_MM'] ,2),
             lengths_by_colour = lengths_by_colour)
 
     return render_template('index.html', form=form)
