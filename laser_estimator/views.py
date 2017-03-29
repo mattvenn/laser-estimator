@@ -186,7 +186,13 @@ def index():
         log.info("total length = %d" % (total_length_mm))
         width = (t_xmax - t_xmin) * px_to_mm
         height = (t_ymax - t_ymin) * px_to_mm
+
         log.info("width = %d mm height = %d mm" % (width, height))
+        # round up to nearest 50mm
+        width = (width + 49) // 50 * 50
+        height = (height + 49) // 50 * 50
+
+        log.info("rounded width = %d mm rounded height = %d mm" % (width, height))
         send_email_form = SendEmail()
         send_email_form.material.data = material
         send_email_form.svg.data = filename

@@ -33,8 +33,8 @@ class TestCase(TestCase):
     def test_bounding_box(self):
         config = [
             { 'file': '50x50_empty.svg', 'bb': '50.0 x 50.0 mm' },
-            { 'file': '50x50_empty_RGB.svg', 'bb': '161.22 x 51.28 mm' },
-            { 'file': 'bounding.svg', 'bb': '185.16 x 139.12 mm' },
+            { 'file': '50x50_empty_RGB.svg', 'bb': '200.0 x 100.0 mm' },
+            { 'file': 'bounding.svg', 'bb': '200.0 x 150.0 mm' },
             ]
         for c in config:
             payload = { 'svg': open('testfiles/%s' % c['file']), 'material_id': 1}
