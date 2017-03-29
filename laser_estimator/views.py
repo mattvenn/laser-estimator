@@ -131,9 +131,18 @@ def index():
         # couldn't get the inkscape plugin to run within this context, so running as a process ;(
         os.system('python applytransform.py %s > %s' % (filename, filename_nomatrix))
 
+        if os.path.getsize(filename_nomatrix) == 0:
+            flash('Problem parsing SVG file - no height or width found in document')
+            return redirect('/')
+
         # parse svg
-        paths, attributes, svg_attributes = svg2paths2(filename_nomatrix)
-        log.info("found %d paths in file" % len(paths))
+        try:
+            paths, attributes, svg_attributes = svg2paths2(filename_nomatrix)
+            log.info("found %d paths in file" % len(paths))
+        except Exception:
+            flash('Problem parsing SVG file - make sure objects are converted to paths')
+            return redirect('/')
+            
 
         total_length = 0
         lengths_by_colour = {}

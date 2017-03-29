@@ -12,11 +12,15 @@
     <link rel='stylesheet' id='onepress-style-css'  href='http://nice-cuts.com/wp-content/themes/onepress/style.css?ver=4.7.2' type='text/css' media='all' />
   </head>
   <body>
-    <hr>
-    {% for message in get_flashed_messages() %}
-        <div class=flash>{{ message }}</div>
-    {% endfor %}
+
      <div class="container">
+
+
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-danger">
+          <strong>{{ message }}</strong>
+          </div>
+    {% endfor %}
 
     {% block content %}{% endblock %}
 
