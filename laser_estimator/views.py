@@ -125,15 +125,10 @@ def index():
         filename = secure_filename(f.filename)
         filename = os.path.join(app.config['UPLOAD_DIR'], secure_filename(f.filename))
         f.save(filename)
-        filename_nomatrix = filename + ".nomatrix"
+        filename_nomatrix = filename + ".nomatrix.svg"
 
-
-        # couldn't get the inkscape plugin to run within this context, so running as a process ;(
-        os.system('python applytransform.py %s > %s' % (filename, filename_nomatrix))
-
-        if os.path.getsize(filename_nomatrix) == 0:
-            flash('Problem parsing SVG file - no height or width found in document')
-            return redirect('/')
+        # use svgo to cleanup svg files
+        os.system('svgo %s %s' % (filename, filename_nomatrix))
 
         # parse svg
         try:
@@ -143,7 +138,6 @@ def index():
             flash('Problem parsing SVG file - make sure objects are converted to paths')
             return redirect('/')
             
-
         total_length = 0
         lengths_by_colour = {}
         total_paths = 0
@@ -152,14 +146,20 @@ def index():
             colour = None
             path = paths[i]
             attr = attributes[i]
-            style = attr['style']
-            styles = style.split(';')
-            for s in styles:
-                if s.startswith('stroke:'):
-                    colour = s[7:] # just grab the colour
+
+            if attr.has_key('stroke'):
+                colour = attr['stroke']
+            elif attr.has_key('style'):
+                styles = style.split(';')
+                for s in styles:
+                    if s.startswith('stroke:'):
+                        colour = s[7:] # just grab the colour
+            else:
+                # default to black if can't parse the colour
+                colour = '#000000'
             #pprint(path)
             #pprint(styles)
-            log.info("path %d id %s length %d colour %s" % (total_paths, attr['id'], path.length(), colour))
+            log.debug("path %s length %s colour %s" % (total_paths, path.length(), colour))
             try:
                 lengths_by_colour[colour] += round(path.length() * px_to_mm, 2)
             except KeyError:
