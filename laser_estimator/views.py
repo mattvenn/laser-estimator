@@ -150,7 +150,7 @@ def index():
             if attr.has_key('stroke'):
                 colour = attr['stroke']
             elif attr.has_key('style'):
-                styles = style.split(';')
+                styles = attr['style'].split(';')
                 for s in styles:
                     if s.startswith('stroke:'):
                         colour = s[7:] # just grab the colour

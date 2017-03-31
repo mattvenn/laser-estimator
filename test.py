@@ -59,6 +59,7 @@ class TestCase(TestCase):
 #            { 'file': '50x50circle.svg', 'len': '156.98 mm', 'cost': '10.0' }, # wrong! should be 50x50 and same price as square
             { 'file': 'text_as_path.svg', 'len': '513.31 mm', 'cost': '30.0' },
             { 'file': '50x50_empty_RGB.svg', 'len': '600.0 mm', 'cost': '80.0' },
+            { 'file': 'MFBA.svg', 'len': '1867.62 mm', 'cost': '40.0' },
             ]
         
         for c in config:
