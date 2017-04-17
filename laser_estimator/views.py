@@ -128,7 +128,8 @@ def index():
         filename_nomatrix = filename + ".nomatrix.svg"
 
         # use svgo to cleanup svg files
-        os.system('svgo --pretty %s %s' % (filename, filename_nomatrix))
+        # might fail on dev machine as svgo is older
+        os.system('svgo --pretty --disable mergePaths --enable convertShapeToPath %s %s' % (filename, filename_nomatrix))
 
         # parse svg
         try:
