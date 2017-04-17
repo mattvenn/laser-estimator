@@ -18,7 +18,7 @@
                 cut_choice += cut_type;
                 cut_choice += ",";
             {% endfor %}
-            var result = document.getElementById('result');  
+//            var result = document.getElementById('result');  
             var cut_choices = document.getElementById('cut_choices');  
             cut_choices.value = cut_choice;
             var cost = document.getElementById('cost');  
@@ -29,7 +29,7 @@
             for( var i = 0; i < speeds.length; i ++)
                 total_time += lengths[i] / speeds[i]; 
 
-            result.textContent = Math.round(100 * total_time / 60) / 100;
+            //result.textContent = Math.round(100 * total_time / 60) / 100;
             var cut_cost =  Math.round(100 * total_time * {{ cut_cost }}) / 100;
             cost.textContent = cut_cost;
             total_cost.textContent = cut_cost + {{material_cost}};
@@ -39,35 +39,39 @@
         window.onload = calculate;
     </script>
 
-    <h1>Your file</h1>
-            <ul>
-            <li>material : {{ material }}</li>
-          <li>paths found : {{ total_paths }}</li>
-          <li>total path length : {{ total_length_mm }} mm</li>
-          <li>bounding box : {{ width }} x {{ height }} mm</li>
-          </ul>
-            
-    <h1>Choose type of cut per colour in file</h1>
+    <h1>Your quote</h1>
+
+  <h3>Your Design</h3>
+  <img style="height:400px;border:2px solid black" src="{{ filename }}"><br>
+    <h3>Assign cut type to colour</h3>
           {% for key, value in lengths_by_colour.iteritems() %}
-               <svg width="20" height="20">
-                 <rect width="20" height="20" style="fill:{{ key }}" />
+               <svg width="40" height="40">
+                 <rect width="40" height="40" style="fill:{{ key }}" />
                </svg> 
-               colour {{ key }} = {{ value }} mm
+     <!--          colour {{ key }} = {{ value }} mm -->
                    <select id="{{ key }}" name="cut_type" onchange="calculate()"><option value="{{ material.vector_etch_speed }}">vector etch</option><option value="{{ material.cut_speed }}">cut</option></select> 
                 <br>
           {% endfor %}
+          
+            <h3>Job details</h3>
+            <ul>
+            <li>Material: {{ material }}</li>
+          <li>Paths found: {{ total_paths }}</li>
+          <li>Total path length: {{ total_length_mm }} mm</li>
+          <li>Bounding box: {{ width }} x {{ height }} mm</li>
+          </ul>
 
-          <h1>Estimation</h1>
+          <h3>Estimated quote</h3>
           <ul>
-          <li> time : <span id="result"/></span> min</li>
-          <li> cut cost : £<span id="cost"/></span></li>
-          <li> material cost : {{ material_cost }}</li>
-          <li> total cost : £<span id="total_cost"/></span></li>
+        <!--  <li>Time: <span id="result"/></span> min</li>  -->
+          <li>Cut cost: £<span id="cost"/></span></li>
+          <li>Material cost: £{{ material_cost }}</li>
+          <li><b>Total cost</b> (excluding shipping): <b>£<span id="total_cost"/></span></b></li>
           </ul>
           </p>
 
-    <h1>Like this quote?</h1>
-        Fill in your email and we'll check the quote and get back to you with an approved price.
+    <h3>Like this quote?</h3>
+    Please write your name and email address in the fields below and hit the button to send the quote to our team. We will review it as quickly as we can, and get back to you with a confirmed price and option for you to give us the go-ahead to get     cutting!
         <form method="POST" action="{{ url_for('send_email') }}" enctype="multipart/form-data">
           {{ form.hidden_tag() }}
           Email: {{ form.email() }} Name: {{ form.name() }}<br>
@@ -75,13 +79,10 @@
           {{ form.svg }}
           {{ form.cut_choices }}
           {{ form.email_total_cost }}
-        <input type="submit" value="Send email">
+        <input type="submit" value="Send quote">
         </form>
 
-    <h1>Start again</h1>
-          <a href="{{ url_for('index') }}">Upload a new file</a>
+        <a href="{{ url_for('index') }}" class="btn btn-danger" role="button">Start again</a>
 
-      <h1>Your SVG</h1>
-      <img style="border:2px solid black" src="{{ filename }}"><br>
 
 {% endblock %}

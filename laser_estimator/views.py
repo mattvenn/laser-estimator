@@ -11,7 +11,7 @@ from flask_mail import Mail, Message
 #from pprint import pprint
 
 log = logging.getLogger()
-log.setLevel(logging.INFO)
+log.setLevel(logging.DEBUG)
 log_format = logging.Formatter('%(asctime)s - %(levelname)-8s - %(message)s')
 ch = logging.StreamHandler()
 ch.setFormatter(log_format)

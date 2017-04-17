@@ -1,7 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Upload SVG</h1>
-
+    <h1>Get a quick quote</h1>
+<p>
+This tool will help you get a quote for laser cut parts, quickly. Currently in beta, once you have chosen your material and uploaded your file, you can send the job request over to our team for approval. Once we have checked it out, we will get in touch with confirmation of the quote, and payment details. We welcome any feedback you wish to give.
+</p>
+<p>      
+Please ensure that you have prepared your file in the following way:
+<ul>
+<li>Use Inkscape (<a href="http://inkscape.org/">freely available from here</a>)</li>
+<li>Ensure that ‘geometric bounding box’ option is used:</li>
+    <ul>
+    <li>Edit > Inkscape preferences > Tools > Geometric</li>
+    <li>Bounding Box</li>
+    </ul>
+<li>Create all designs in vector format, and paths only (no fills).</li>
+<li>Ensure that all paths are converted to ‘paths’, using the option: Path > Object to Path (Ctrl-Shift-C)</li>
+<li>Use Inkscape to save the file as .svg</li>
+</ul>
+</p>
     <form method="POST" enctype="multipart/form-data">
       {{ form.hidden_tag() }}
 
@@ -13,7 +29,7 @@
       </ul>
       -->
 
-      <h3>Choose your material</h3> {{ form.material_id }}<br>
+      <h3>Select your material</h3> {{ form.material_id }}<br>
       <h3>Upload your SVG</h3> {{ form.svg }}<br>
       <input type="submit" value="Upload">
   </form>
