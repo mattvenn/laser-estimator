@@ -128,7 +128,7 @@ def index():
         filename_nomatrix = filename + ".nomatrix.svg"
 
         # use svgo to cleanup svg files
-        os.system('svgo %s %s' % (filename, filename_nomatrix))
+        os.system('svgo --pretty %s %s' % (filename, filename_nomatrix))
 
         # parse svg
         try:
@@ -146,7 +146,6 @@ def index():
             colour = None
             path = paths[i]
             attr = attributes[i]
-
             if attr.has_key('stroke'):
                 colour = attr['stroke']
             elif attr.has_key('style'):
@@ -154,11 +153,9 @@ def index():
                 for s in styles:
                     if s.startswith('stroke:'):
                         colour = s[7:] # just grab the colour
-            else:
-                # default to black if can't parse the colour
-                colour = '#000000'
-            #pprint(path)
-            #pprint(styles)
+            if colour is None:
+                log.debug("couldn't get colour for path, skipping")
+                continue
             log.debug("path %s length %s colour %s" % (total_paths, path.length(), colour))
             try:
                 lengths_by_colour[colour] += round(path.length() * px_to_mm, 2)
