@@ -2,6 +2,25 @@
 {% block content %}
     <script type="text/javascript">
     // javascript to do the speed/length calculations
+        function round(value, exp) {
+          if (typeof exp === 'undefined' || +exp === 0)
+            return Math.round(value);
+
+          value = +value;
+          exp = +exp;
+
+          if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0))
+            return NaN;
+
+          // Shift
+          value = value.toString().split('e');
+          value = Math.round(+(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp)));
+
+          // Shift back
+          value = value.toString().split('e');
+          return +(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp));
+        }
+
         function calculate() 
         {
             var speeds = [];
@@ -30,7 +49,7 @@
                 total_time += lengths[i] / speeds[i]; 
 
             //result.textContent = Math.round(100 * total_time / 60) / 100;
-            var cut_cost =  Math.round(100 * total_time * {{ cut_cost }}) / 100;
+            var cut_cost =  round(total_time * {{ cut_cost }}, 2);
             cost.textContent = cut_cost;
             total_cost.textContent = cut_cost + {{material_cost}};
             email_total_cost.value = cut_cost + {{material_cost}};
