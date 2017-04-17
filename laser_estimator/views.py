@@ -127,9 +127,13 @@ def index():
         f.save(filename)
         filename_nomatrix = filename + ".nomatrix.svg"
 
+        root_dir = os.path.dirname(os.getcwd())
+        config = os.path.join(root_dir, 'laser_estimator', 'svgo.config')
+        log.debug(config)
+
         # use svgo to cleanup svg files
         # might fail on dev machine as svgo is older
-        os.system('svgo --pretty --disable mergePaths --enable convertShapeToPath %s %s' % (filename, filename_nomatrix))
+        os.system('svgo --pretty --config %s %s %s' % (config, filename, filename_nomatrix))
 
         # parse svg
         try:
