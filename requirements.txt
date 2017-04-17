@@ -1,4 +1,5 @@
 flask
+gunicorn
 Flask-Mail
 flask_sqlalchemy
 sqlalchemy-migrate
