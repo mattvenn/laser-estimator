@@ -43,15 +43,27 @@ class TestCase(TestCase):
 
     def test_colour_paths(self):
         config = [
-            { 'file': '50x50_empty.svg', 'col': 'colour #000 = 200.0 mm' },
-            { 'file': '50x50_empty_RGB.svg', 'col': ' #00f = 200.0 mm' },
-            { 'file': '50x50_empty_RGB.svg', 'col': ' #000 = 200.0 mm' },
-            { 'file': '50x50_empty_RGB.svg', 'col': ' #f00 = 200.0 mm' },
+            { 'file': '50x50_empty.svg', 'col': 'colour #000000 = 200.0 mm' },
+            { 'file': '50x50_empty_RGB.svg', 'col': ' #0000ff = 200.0 mm' },
+            { 'file': '50x50_empty_RGB.svg', 'col': ' #000000 = 200.0 mm' },
+            { 'file': '50x50_empty_RGB.svg', 'col': ' #ff0000 = 200.0 mm' },
             ]
         for c in config:
             payload = { 'svg': open('testfiles/%s' % c['file']), 'material_id': 1 }
             rv = self.client.post("/", data=payload)
+ #           print rv.data
             assert c['col'] in rv.data
+
+    def test_illustrator_svgs(self):
+        config = [
+            { 'file': 'illustrator1.svg', 'len': '160.02 mm', 'cost': '10.0' },
+            ]
+
+        for c in config:
+            payload = { 'svg': open('testfiles/%s' % c['file']), 'material_id': 1 }
+            rv = self.client.post("/", data=payload, follow_redirects=True)
+            assert c['len'] in rv.data
+            assert c['cost'] in rv.data
 
     def test_svgs(self):
         config = [
@@ -59,7 +71,7 @@ class TestCase(TestCase):
 #            { 'file': '50x50circle.svg', 'len': '156.98 mm', 'cost': '10.0' }, # wrong! should be 50x50 and same price as square
             { 'file': 'text_as_path.svg', 'len': '513.31 mm', 'cost': '30.0' },
             { 'file': '50x50_empty_RGB.svg', 'len': '600.0 mm', 'cost': '80.0' },
-            { 'file': 'MFBA.svg', 'len': '1867.62 mm', 'cost': '40.0' },
+            { 'file': 'MFBA.svg', 'len': '1842.98 mm', 'cost': '120.0' },
             ]
         
         for c in config:

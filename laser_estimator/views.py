@@ -159,8 +159,9 @@ def index():
                     if s.startswith('stroke:'):
                         colour = s[7:] # just grab the colour
             if colour is None:
-                log.debug("couldn't get colour for path, skipping")
-                continue
+                log.debug("couldn't get colour for path, changing to black")
+                colour = '#000'
+
             log.debug("path %s length %s colour %s" % (total_paths, path.length(), colour))
             try:
                 lengths_by_colour[colour] += round(path.length() * px_to_mm, 2)
@@ -185,15 +186,19 @@ def index():
 
         material = Material.query.filter(Material.id == form.material_id.data).first()
         total_length_mm = total_length * px_to_mm
-        log.info("total length = %d" % (total_length_mm))
+        log.info("total length = %f" % (total_length_mm))
         width = (t_xmax - t_xmin) * px_to_mm
         height = (t_ymax - t_ymin) * px_to_mm
 
         log.info("width = %d mm height = %d mm" % (width, height))
         # round up to nearest 50mm
         unit_size = app.config['UNIT_SIZE_MM']
-        width = (width + unit_size-1) // unit_size * unit_size 
-        height = (height + unit_size-1) // unit_size * unit_size 
+        if total_paths == 0:
+            width = 0
+            height = 0
+        else:
+            width = (width + unit_size-1) // unit_size * unit_size 
+            height = (height + unit_size-1) // unit_size * unit_size 
 
         log.info("rounded width = %d mm rounded height = %d mm" % (width, height))
         send_email_form = SendEmail()
