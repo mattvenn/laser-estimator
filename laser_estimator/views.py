@@ -160,6 +160,9 @@ def index():
                         colour = s[7:] # just grab the colour
             if colour is None:
                 log.debug("couldn't get colour for path, changing to black")
+
+            # convert all black paths to the same style, so they don't show up twice
+            if colour is None or colour == 'black' or colour == '#000000' or colour == 'rgb(0,0,0)':
                 colour = '#000'
 
             log.debug("path %s length %s colour %s" % (total_paths, path.length(), colour))

@@ -43,9 +43,9 @@ class TestCase(TestCase):
 
     def test_colour_paths(self):
         config = [
-            { 'file': '50x50_empty.svg', 'col': 'colour #000000 = 200.0 mm' },
+            { 'file': '50x50_empty.svg', 'col': ' #000 = 200.0 mm' },
             { 'file': '50x50_empty_RGB.svg', 'col': ' #0000ff = 200.0 mm' },
-            { 'file': '50x50_empty_RGB.svg', 'col': ' #000000 = 200.0 mm' },
+            { 'file': '50x50_empty_RGB.svg', 'col': ' #000 = 200.0 mm' },
             { 'file': '50x50_empty_RGB.svg', 'col': ' #ff0000 = 200.0 mm' },
             ]
         for c in config:
@@ -56,7 +56,7 @@ class TestCase(TestCase):
 
     def test_illustrator_svgs(self):
         config = [
-            { 'file': 'illustrator1.svg', 'len': '160.02 mm', 'cost': '10.0' },
+            { 'file': 'illustrator1.svg', 'len': '320.04 mm', 'cost': '10.0' },
             ]
 
         for c in config:
