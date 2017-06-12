@@ -147,10 +147,35 @@ def index():
         lengths_by_colour = {}
         total_paths = 0
         t_xmin, t_xmax, t_ymin, t_ymax = 1000000, 0, 1000000, 0
+
+        # quick check for outline path
+        outline_ok = False
+        for i in range(len(paths)):
+            path = paths[i]
+            attr = attributes[i]
+            if attr.has_key('id'):
+                if attr['id'] == 'OUTLINE':
+                    log.debug("found outline path")
+                    if abs(path.length() * px_to_mm - 2560) > 0.1:
+                        flash('Problem with template, it has been resized.')
+                        return redirect('/')
+                    else:
+                        outline_ok = True
+
+        if not outline_ok:
+            flash("Couldn't find template, please download it")
+            return redirect('/')
+
         for i in range(len(paths)):
             colour = None
             path = paths[i]
             attr = attributes[i]
+
+            # skip outline
+            if attr.has_key('id'):
+                if attr['id'] == 'OUTLINE':
+                    continue
+
             if attr.has_key('stroke'):
                 colour = attr['stroke']
             elif attr.has_key('style'):

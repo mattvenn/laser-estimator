@@ -7,15 +7,10 @@ This tool will help you get a quote for laser cut parts, quickly. Currently in b
 <p>      
 Please ensure that you have prepared your file in the following way:
 <ul>
-<li>Use Inkscape (<a href="http://inkscape.org/">freely available from here</a>)</li>
-<li>Ensure that ‘geometric bounding box’ option is used:</li>
-    <ul>
-    <li>Edit > Inkscape preferences > Tools > Geometric</li>
-    <li>Bounding Box</li>
-    </ul>
-<li>Create all designs in vector format, and paths only (no fills).</li>
-<li>Ensure that all paths are converted to ‘paths’, using the option: Path > Object to Path (Ctrl-Shift-C)</li>
-<li>Use Inkscape to save the file as .svg</li>
+    <li>Use Inkscape (<a href="http://inkscape.org/">freely available from here</a>)</li>
+    <li>Download our <a href="{{ url_for('static', filename='template.svg') }}">template</a> as a basis for your design.</li>
+    <li>Create all designs in vector format, and paths only (no fills).</li>
+    <li>Save the file as .svg</li>
 </ul>
 </p>
     <form method="POST" enctype="multipart/form-data">

@@ -9,12 +9,12 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="744.09448819"
-   height="1052.3622047"
+   width="780mm"
+   height="500mm"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="50x50_empty.svg">
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="50x50circle.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -24,14 +24,15 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.66231951"
-     inkscape:cx="372.04724"
-     inkscape:cy="526.18109"
-     inkscape:document-units="px"
+     inkscape:zoom="0.24748737"
+     inkscape:cx="1305.3539"
+     inkscape:cy="1326.3887"
+     inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1440"
-     inkscape:window-height="876"
+     units="mm"
+     inkscape:window-width="1600"
+     inkscape:window-height="1176"
      inkscape:window-x="0"
      inkscape:window-y="24"
      inkscape:window-maximized="1" />
@@ -43,18 +44,31 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="m 65.62262,298.14567 177.16535,0 0,177.16535 -177.16535,0 z"
-       id="rect2985"
-       inkscape:connector-curvature="0" />
+     id="layer1"
+     transform="translate(0,719.29169)">
+    <rect
+       style="fill:none;stroke:#ffff00;stroke-width:0.70866144;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="OUTLINE"
+       width="2763.7795"
+       height="1771.6536"
+       x="-6.7282845e-006"
+       y="-719.29169" />
+    <g
+       id="layer1-4"
+       inkscape:label="Layer 1"
+       transform="translate(76.109487,-906.16385)">
+      <path
+         inkscape:connector-curvature="0"
+         id="rect2985"
+         d="m 65.62262,298.14567 177.16535,0 0,177.16535 -177.16535,0 z"
+         style="fill:none;stroke:#000000;stroke-width:0.1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    </g>
   </g>
 </svg>

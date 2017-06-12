@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="text.svg">
+   sodipodi:docname="illustrator1.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -60,30 +60,10 @@
        height="1771.6536"
        x="-6.7282845e-006"
        y="-719.29169" />
-    <g
-       id="layer1-7"
-       inkscape:label="Layer 1"
-       transform="translate(-18.926831,-762.85339)">
-      <g
-         id="text3862"
-         style="font-size:144px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:arial;-inkscape-font-specification:arial">
-        <path
-           id="path3886"
-           d="m 204.6116,192.72964 0,88.10157 -13.35937,0 0,-88.10157 -34.03125,0 0,-10.96875 81.42187,0 0,10.96875 -34.03125,0"
-           inkscape:connector-curvature="0" />
-        <path
-           id="path3888"
-           d="m 253.83035,280.83121 0,-99.07032 75.16407,0 0,10.96875 -61.73438,0 0,31.78125 57.51563,0 0,10.82813 -57.51563,0 0,34.52344 64.61719,0 0,10.96875 -78.04688,0"
-           inkscape:connector-curvature="0" />
-        <path
-           id="path3890"
-           d="m 416.39285,280.83121 -29.74218,-43.3125 -30.375,43.3125 -14.83594,0 37.6875,-51.46875 -34.80469,-47.60157 14.83594,0 27.5625,38.88282 26.78906,-38.88282 14.83594,0 -33.89063,47.10938 36.77344,51.96094 -14.83594,0"
-           inkscape:connector-curvature="0" />
-        <path
-           id="path3892"
-           d="m 485.01785,192.72964 0,88.10157 -13.35937,0 0,-88.10157 -34.03125,0 0,-10.96875 81.42187,0 0,10.96875 -34.03125,0"
-           inkscape:connector-curvature="0" />
-      </g>
-    </g>
   </g>
+  <style
+     id="style4452"
+     type="text/css">
+	.st0{fill:#FFFFFF;stroke:#000000;stroke-width:0.5669;stroke-miterlimit:10;}
+</style>
 </svg>
