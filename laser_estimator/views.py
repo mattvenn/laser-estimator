@@ -146,7 +146,7 @@ def index():
         total_length = 0
         lengths_by_colour = {}
         total_paths = 0
-        t_xmin, t_xmax, t_ymin, t_ymax = 1000000, 0, 1000000, 0
+        t_xmin, t_xmax, t_ymin, t_ymax = 1000000, -1000000, 1000000, -1000000 
 
         # quick check for outline path
         outline_ok = False
@@ -190,7 +190,7 @@ def index():
             if colour is None or colour == 'black' or colour == '#000000' or colour == 'rgb(0,0,0)':
                 colour = '#000'
 
-            log.debug("path %s length %s colour %s" % (total_paths, path.length(), colour))
+            log.debug("path %s length %s colour %s" % (total_paths, path.length() * px_to_mm, colour))
             try:
                 lengths_by_colour[colour] += round(path.length() * px_to_mm, 2)
             except KeyError:
@@ -210,7 +210,7 @@ def index():
             if ymax > t_ymax:
                 t_ymax = ymax
 
-            #log.info("width = %d height = %d" % ((xmax - xmin) * px_to_mm, (ymax - ymin) * px_to_mm))
+            log.debug("width = %d height = %d" % ((xmax - xmin) * px_to_mm, (ymax - ymin) * px_to_mm))
 
         material = Material.query.filter(Material.id == form.material_id.data).first()
         total_length_mm = total_length * px_to_mm
