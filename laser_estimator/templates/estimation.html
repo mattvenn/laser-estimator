@@ -49,10 +49,10 @@
                 total_time += lengths[i] / speeds[i]; 
 
             //result.textContent = Math.round(100 * total_time / 60) / 100;
-            var cut_cost =  round(total_time * {{ cut_cost }}, 2);
-            cost.textContent = cut_cost;
-            total_cost.textContent = cut_cost + {{material_cost}};
-            email_total_cost.value = cut_cost + {{material_cost}};
+            var cut_cost =  total_time * {{ cut_cost }};
+            cost.textContent = round(cut_cost, 2);
+            total_cost.textContent = round(cut_cost + {{material_cost}},2);
+            email_total_cost.value = round(cut_cost + {{material_cost}},2);
 
         }
         window.onload = calculate;
@@ -68,7 +68,10 @@
                  <rect width="40" height="40" style="fill:{{ key }}" />
                </svg> 
      <!--          colour {{ key }} = {{ value }} mm -->
-                   <select id="{{ key }}" name="cut_type" onchange="calculate()"><option value="{{ material.vector_etch_speed }}">vector etch</option><option value="{{ material.cut_speed }}">cut</option></select> 
+                   <select id="{{ key }}" name="cut_type" onchange="calculate()">
+                    <option value="{{ material.cut_speed }}">cut</option>
+                    <option value="{{ material.vector_etch_speed }}">vector etch</option>
+                   </select> 
                 <br>
           {% endfor %}
           
